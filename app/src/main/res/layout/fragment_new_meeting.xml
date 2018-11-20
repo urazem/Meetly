@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AuthorizationFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/registrationAccountScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="384dp">
+
+        <ImageView
+            android:id="@+id/footerBackgroundR"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@color/colorProjectWhite" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:src="@color/colorProjectTextWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:background="@android:drawable/ic_delete"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Создание встречи"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/button5"
+            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+        <ImageView
+            android:id="@+id/userIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:layout_constraintStart_toStartOf="@+id/footerBackgroundR"
+            app:layout_constraintTop_toTopOf="@+id/nameInputInfo" />
+
+        <TextView
+            android:id="@+id/nameInputInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Название встречи"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/nameInput"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/footerBackgroundR"
+            app:layout_constraintStart_toEndOf="@+id/userIcon"
+            app:layout_constraintTop_toBottomOf="@+id/nameInputInfo" />
+
+        <TextView
+            android:id="@+id/surnameInputInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Описание встречи"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/surnameInput"
+            app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+
+        <EditText
+            android:id="@+id/surnameInput"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/userIcon"
+            app:layout_constraintTop_toBottomOf="@+id/surnameInputInfo" />
+
+        <TextView
+            android:id="@+id/textView3r2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Время встречи"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/editTextr2"
+            app:layout_constraintTop_toBottomOf="@+id/surnameInput" />
+
+        <EditText
+            android:id="@+id/editTextr2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/footerBackgroundR"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/userIcon"
+            app:layout_constraintTop_toBottomOf="@+id/textView3r2" />
+
+        <Button
+            android:id="@+id/button4r2"
+            android:layout_width="0dp"
+            android:layout_height="29dp"
+            android:background="@drawable/fields2"
+            android:text="Настроить время"
+            android:textAllCaps="false"
+            android:textColor="@color/colorProjectTextWhite"
+            app:layout_constraintEnd_toEndOf="@+id/editTextr2"
+            app:layout_constraintStart_toStartOf="@+id/editTextr2"
+            app:layout_constraintTop_toBottomOf="@+id/editTextr2" />
+
+        <TextView
+            android:id="@+id/textView3r3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Место встречи"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/editTextr3"
+            app:layout_constraintTop_toBottomOf="@+id/button4r2" />
+
+        <EditText
+            android:id="@+id/editTextr3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="@color/colorProjectTextDark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/footerBackgroundR"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/userIcon"
+            app:layout_constraintTop_toBottomOf="@+id/textView3r3" />
+
+        <Button
+            android:id="@+id/button4r3"
+            android:layout_width="0dp"
+            android:layout_height="29dp"
+            android:background="@drawable/fields2"
+            android:text="Выбрать заведение"
+            android:textAllCaps="false"
+            android:textColor="@color/colorProjectTextWhite"
+            app:layout_constraintEnd_toEndOf="@+id/editTextr3"
+            app:layout_constraintStart_toStartOf="@+id/editTextr3"
+            app:layout_constraintTop_toBottomOf="@+id/editTextr3" />
+
+        <Button
+            android:id="@+id/button4r"
+            android:layout_width="0dp"
+            android:layout_height="29dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/fields2"
+            android:text="Создать встречу"
+            android:textAllCaps="false"
+            android:textColor="@color/colorProjectTextWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/footerBackgroundR"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
