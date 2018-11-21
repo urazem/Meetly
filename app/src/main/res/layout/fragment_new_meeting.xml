@@ -40,7 +40,6 @@
                     android:id="@+id/nameInput2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="25dp"
                     android:background="@drawable/fields"
@@ -85,8 +84,8 @@
                     android:text="Дата встречи"
                     android:textColor="@color/colorProjectTextDark"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/surnameInput"
-                    app:layout_constraintTop_toBottomOf="@+id/surnameInput" />
+                    app:layout_constraintStart_toStartOf="@+id/editText"
+                    app:layout_constraintTop_toBottomOf="@+id/editText" />
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -144,10 +143,10 @@
                     android:layout_width="0dp"
                     android:layout_height="28dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/fields"
                     android:ems="10"
                     android:inputType="text"
                     android:padding="5dp"
+                    android:background="@drawable/fields"
                     android:textColor="@color/colorProjectTextDark"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/textView3r"
@@ -199,29 +198,12 @@
                     android:id="@+id/surnameInputInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:text="Описание встречи"
                     android:textColor="@color/colorProjectTextDark"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/surnameInput"
+                    app:layout_constraintStart_toStartOf="@+id/nameInput2"
                     app:layout_constraintTop_toBottomOf="@+id/nameInput2" />
-
-                <EditText
-                    android:id="@+id/surnameInput"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/fields"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textColor="@color/colorProjectTextDark"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/userIcon"
-                    app:layout_constraintTop_toBottomOf="@+id/surnameInputInfo" />
 
                 <TextView
                     android:id="@+id/textView3r2"
@@ -297,6 +279,18 @@
                     app:layout_constraintStart_toStartOf="@+id/nameInput5"
                     app:layout_constraintTop_toBottomOf="@+id/nameInput5"
                     app:layout_constraintVertical_bias="0.0" />
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="241dp"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fields"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/colorProjectTextDark"
+                    app:layout_constraintStart_toEndOf="@+id/userIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/surnameInputInfo" />
 
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
