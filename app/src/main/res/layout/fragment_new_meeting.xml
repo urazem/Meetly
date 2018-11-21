@@ -271,32 +271,32 @@
 
                 <Button
                     android:id="@+id/button4r"
-                    android:layout_width="184dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="323dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="50dp"
                     android:background="@drawable/fields2"
                     android:text="Создать встречу"
                     android:textAllCaps="false"
                     android:textColor="@color/colorProjectTextWhite"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toTopOf="@+id/imageView4"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button4r6" />
 
                 <Button
                     android:id="@+id/button4r6"
                     android:layout_width="240dp"
                     android:layout_height="29dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/fields2"
                     android:text="Выбрать участников"
                     android:textAllCaps="false"
                     android:textColor="@color/colorProjectTextWhite"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/nameInput5"
-                    app:layout_constraintTop_toBottomOf="@+id/nameInput5" />
+                    app:layout_constraintTop_toBottomOf="@+id/nameInput5"
+                    app:layout_constraintVertical_bias="0.0" />
 
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
