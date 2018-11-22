@@ -9,11 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 public class HeadFragment extends Fragment {
 
-    Button button3;
+    ImageButton button3;
 
 
     public interface onSomeEventListener {

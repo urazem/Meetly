@@ -7,11 +7,14 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import ru.tinkoff.decoro.MaskImpl;
+import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser;
+import ru.tinkoff.decoro.slots.Slot;
+import ru.tinkoff.decoro.watchers.FormatWatcher;
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher;
 
 public class AuthorizationFragment extends Fragment {
 
@@ -42,6 +50,9 @@ public class AuthorizationFragment extends Fragment {
     boolean responceAuth,auth;
     int id,user_id;
     Retrofit retrofit;
+    ProgressBar authProgressBar, registerProgressBar, createAccountProgressBar;
+    private DBHelper mDBHelper;
+    String formattedTelephone;
 
     String userStatus;
     public boolean numberStatus; // Переменная содержащая статус номера.
@@ -72,7 +83,6 @@ public class AuthorizationFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,6 +106,16 @@ public class AuthorizationFragment extends Fragment {
         checkNumber = v.findViewById(R.id.checkNumber);
         nextEvent = v.findViewById(R.id.nextEvent);
         createAccount = v.findViewById(R.id.createAccount);
+        authProgressBar = v.findViewById(R.id.authProgressBar);
+        registerProgressBar = v.findViewById(R.id.registerProgressBar);
+        createAccountProgressBar = v.findViewById(R.id.createAccProgressBar);
+        authProgressBar.setVisibility(View.GONE);
+        registerProgressBar.setVisibility(View.GONE);
+        createAccountProgressBar.setVisibility(View.GONE);
+
+         mDBHelper = new DBHelper(getContext());
+       //  mDBHelper.deleteUser();
+
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -112,7 +132,11 @@ public class AuthorizationFragment extends Fragment {
 
         startSystem();
         addListenerOnButton();
-
+        Slot[] slots = new UnderscoreDigitSlotsParser().parseSlots("+_ ___ ___ __ __");
+        FormatWatcher formatWatcher = new MaskFormatWatcher( // форматировать текст будет вот он
+                MaskImpl.createTerminated(slots)
+        );
+        formatWatcher.installOn(numberInput);
         return v;
     }
 
@@ -137,7 +161,6 @@ public class AuthorizationFragment extends Fragment {
                     }
                 }
         );
-
         createAccount.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -150,69 +173,79 @@ public class AuthorizationFragment extends Fragment {
 
     void startSystem() {
         logoScreen.setVisibility(View.VISIBLE);
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         // Ожидание перехода следующий раздел приложения:
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 logoScreen.setVisibility(View.GONE);
-
-                authorizationHeadScreen.setVisibility(View.VISIBLE);
-                authorizationScreen.setVisibility(View.VISIBLE);
+                if(mDBHelper.isEmpty()) {
+                    authorizationHeadScreen.setVisibility(View.VISIBLE);
+                    authorizationScreen.setVisibility(View.VISIBLE);
+                } else if(mDBHelper.getAuth() == 0) {
+                    authorizationHeadScreen.setVisibility(View.VISIBLE);
+                    authorizationScreen.setVisibility(View.VISIBLE);
+                } else if (mDBHelper.getAuth() == 1){
+                    logoScreen.setVisibility(View.GONE);
+                    authorizationHeadScreen.setVisibility(View.GONE);
+                    authorizationScreen.setVisibility(View.GONE);
+                    codeInputScreen.setVisibility(View.GONE);
+                    registrationAccountScreen.setVisibility(View.GONE);
+                    someEventListener.someEvent("toMain");
+                }
             }
         }, 2500);
     }
-
 
     // Проверяем номер на наличие в системе:
     void checkNumberLogic() {
         APIInterface service = retrofit.create(APIInterface.class);
         telephone = numberInput.getText().toString();
+         formattedTelephone = telephone.replaceAll("\\s", "");
 
-        Call<User> call = service.post(telephone);
+        if (telephone.length() < 16) {
+            Toast.makeText(getContext(), "Телефон введен не верно! ", Toast.LENGTH_LONG).show();
 
+        } else {
+            authProgressBar.setVisibility(View.VISIBLE);
+            authProgressBar.setProgress(20);
+            authProgressBar.setMax(70);
+
+        Call<User> call = service.post(formattedTelephone);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 response.body();
-
                 code = response.body().getMessage();
-
                 numberStatus = response.body().getAuth();
-                Toast.makeText(getContext(),code,Toast.LENGTH_LONG);
-                if(code!=null)
-                    codeInput.setText(code,TextView.BufferType.EDITABLE);
-                else Toast.makeText(getContext(),"Ошибка на сервере", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), code, Toast.LENGTH_LONG);
+                if (code != null)
+                    codeInput.setText(code, TextView.BufferType.EDITABLE);
+                else Toast.makeText(getContext(), "Ошибка на сервере", Toast.LENGTH_LONG);
                 authorizationHelp.setVisibility(View.GONE);
 
-                if(numberStatus) {
-                    Toast.makeText(getContext(),String.valueOf(numberStatus),Toast.LENGTH_LONG);
+                if (numberStatus) {
+                    Toast.makeText(getContext(), String.valueOf(numberStatus), Toast.LENGTH_LONG);
                     userStatus = "user";
-
                     authorizationType.setText("Вход");
                     nextEvent.setText("Вход");
                     nextEventInfo.setVisibility(View.GONE);
-                }
-                else if(!numberStatus) {
-                    Toast.makeText(getContext(),String.valueOf(numberStatus),Toast.LENGTH_LONG);
+                } else if (!numberStatus) {
+                    Toast.makeText(getContext(), String.valueOf(numberStatus), Toast.LENGTH_LONG);
                     userStatus = "newUser";
-
                     authorizationType.setText("Регистрация");
                     nextEvent.setText("Регистрация");
                 }
-
                 authorizationScreen.setVisibility(View.GONE);
                 codeInputScreen.setVisibility(View.VISIBLE);
             }
-
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // handle execution failures like no internet connectivity
             }
-
         });
-
+    }
         /*
         // Считывать numberInput ниеже:
 
@@ -242,8 +275,11 @@ public class AuthorizationFragment extends Fragment {
 
     void checkCodeLogic() {
         APIInterface service = retrofit.create(APIInterface.class);
+        registerProgressBar.setVisibility(View.VISIBLE);
+        registerProgressBar.setProgress(20);
+        registerProgressBar.setMax(70);
         if(numberStatus) {
-            final Call<User> call2 = service.postlogin(codeInput.getText().toString(), telephone);
+            final Call<User> call2 = service.postlogin(codeInput.getText().toString(), formattedTelephone);
             call2.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
@@ -252,6 +288,7 @@ public class AuthorizationFragment extends Fragment {
                     token = response.body().getToken();
                     id = response.body().getId();
                     message = response.body().getMessage();
+                    mDBHelper.addUser(id, token, 1);
                     //Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                     //Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
                     if (auth) {
@@ -270,7 +307,7 @@ public class AuthorizationFragment extends Fragment {
                 }
             });
         }else {
-            Call<User> call3 = service.post(codeInput.getText().toString(),telephone);
+            Call<User> call3 = service.post(codeInput.getText().toString(),formattedTelephone);
             call3.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
@@ -279,6 +316,7 @@ public class AuthorizationFragment extends Fragment {
                     token = response.body().getToken();
                     id = response.body().getId();
                     message = response.body().getMessage();
+                    mDBHelper.addUser(id, token, 1);
                     //  Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                     //Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
                     if(auth){
@@ -321,6 +359,9 @@ public class AuthorizationFragment extends Fragment {
 
     void createAccountLogic() {
         APIInterface service = retrofit.create(APIInterface.class);
+        createAccountProgressBar.setVisibility(View.VISIBLE);
+        createAccountProgressBar.setProgress(20);
+        createAccountProgressBar.setMax(70);
         name = nameInput.getText().toString();
         surname = surnameInput.getText().toString();
         user_id = id;
@@ -333,7 +374,12 @@ public class AuthorizationFragment extends Fragment {
                 message = response.body().getMessage();
                 //Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                 //Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), "Регистрация прошла успешко", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Регистрация прошла успешно", Toast.LENGTH_LONG).show();
+                logoScreen.setVisibility(View.GONE);
+                authorizationHeadScreen.setVisibility(View.GONE);
+                authorizationScreen.setVisibility(View.GONE);
+                codeInputScreen.setVisibility(View.GONE);
+                registrationAccountScreen.setVisibility(View.GONE);
                 someEventListener.someEvent("toMain");
             }
             @Override

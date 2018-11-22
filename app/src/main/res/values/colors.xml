@@ -8,6 +8,7 @@
     <color name="colorProjectTextWhite">#ffffff</color>
     <color name="colorProjectTextDark">#463c55</color>
     <color name="colorBackgroundDark">#32463c55</color>
+    <color name="colorBackgroundLight">#bfb8ca</color>
     <!--<color name="colorAccent">#554a66</color>-->
 
 </resources>

@@ -5,22 +5,32 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String telephone;
+    public String telephone;
     @SerializedName("auth")
-    private boolean auth;
+    public boolean auth;
 
     @SerializedName("message")
     private String message;
 
     @SerializedName("token")
-    private String token;
+    public String token;
     @SerializedName("name")
-    private String name;
+    public String name;
     @SerializedName("surname")
-    private String surname;
+    public String surname;
     @SerializedName("photo")
-    private String photo;
+    public String photo;
 
+    @SerializedName("id")
+    public int id;
+
+    @SerializedName("user_id")
+    private String user_id;
+
+    public User(int id, String token) {
+        this.id = id;
+        this.token = token;
+    }
     public String getName() {
         return name;
     }
@@ -53,8 +63,7 @@ public class User implements Serializable {
         this.user_id = user_id;
     }
 
-    @SerializedName("user_id")
-    private String user_id;
+
 
     public String getToken() {
         return token;
@@ -72,8 +81,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @SerializedName("id")
-    private int id;
+
 
 
 

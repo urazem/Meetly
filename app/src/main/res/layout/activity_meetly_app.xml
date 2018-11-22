@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/meetly_background"
+    android:background="@color/colorBackgroundLight"
     android:orientation="vertical"
     tools:context=".MeetlyApp">
 
@@ -21,34 +21,52 @@
         android:visibility="gone" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/registrationAccountScreen"
+        android:id="@+id/meetsScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
         tools:layout_editor_absoluteX="384dp">
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/feed"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/colorProjectWhite"
+            android:background="@color/colorBackgroundLight"
             android:padding="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/button4"
+            app:layout_constraintBottom_toTopOf="@+id/btn_friends"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         </android.support.v7.widget.RecyclerView>
 
+        </android.support.v4.widget.SwipeRefreshLayout>
+
         <Button
-            android:id="@+id/button4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:id="@+id/btn_friends"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A09C"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="55"
             android:text="Мои друзья"
             android:textColor="@color/colorProjectTextWhite"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.457"
             app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
