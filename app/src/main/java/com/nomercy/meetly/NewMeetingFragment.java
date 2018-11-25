@@ -181,7 +181,7 @@ public class NewMeetingFragment extends Fragment  {
        }
    }
    public void choosePlace(){
-           Intent intent = new Intent(getContext(), NewPlace.class);
+           Intent intent = new Intent(getContext(), GroupsMain.class);
            startActivity(intent);
        }
 
